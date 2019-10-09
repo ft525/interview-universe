@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Frontend</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+	<style>
+	.btn-circle {
+		width: 45px;
+		height: 45px;
+		line-height: 45px;
+		text-align: center;
+		padding: 0;
+		border-radius: 50%;
+		border: 1px solid gray;
+		cursor: pointer;
+	}
+	input[type="checkbox"]:checked + label {
+		background-color: #007bff;
+	}
+	</style>
+</head>
+<body ng-controller="BodyCtrl as body">
+
+	<div class="container-fluid">
+		<form name="f">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="publisher">彩種</label>
+						<select id="publisher" class="form-control" name="publisher"
+							ng-model="body.lottery.publisher"
+							ng-change="body.lottery.changePublisher()"
+							ng-options="o.label for o in body.lottery.publisher_options track by o.val"></select>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="playing_method">玩法</label>
+						<select id="playing_method" class="form-control" name="playing_method"
+							ng-model="body.lottery.playing_method"
+							ng-options="o.label for o in body.lottery.playing_method_options track by o.val"></select>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Number picker -->
+			<div ng-show="body.lottery.playing_method.val != '總合大小單雙'" ng-cloak>
+				<!-- 萬位 -->
+				<div class="row">
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-1"><input id="wan-0" class="num sr-only" type="checkbox" name="wan" value="0" /><label class="btn-circle" for="wan-0">0</label></div>
+							<div class="col-1"><input id="wan-1" class="num sr-only" type="checkbox" name="wan" value="1" /><label class="btn-circle" for="wan-1">1</label></div>
+							<div class="col-1"><input id="wan-2" class="num sr-only" type="checkbox" name="wan" value="2" /><label class="btn-circle" for="wan-2">2</label></div>
+							<div class="col-1"><input id="wan-3" class="num sr-only" type="checkbox" name="wan" value="3" /><label class="btn-circle" for="wan-3">3</label></div>
+							<div class="col-1"><input id="wan-4" class="num sr-only" type="checkbox" name="wan" value="4" /><label class="btn-circle" for="wan-4">4</label></div>
+							<div class="col-1"><input id="wan-5" class="num sr-only" type="checkbox" name="wan" value="5" /><label class="btn-circle" for="wan-5">5</label></div>
+							<div class="col-1"><input id="wan-6" class="num sr-only" type="checkbox" name="wan" value="6" /><label class="btn-circle" for="wan-6">6</label></div>
+							<div class="col-1"><input id="wan-7" class="num sr-only" type="checkbox" name="wan" value="7" /><label class="btn-circle" for="wan-7">7</label></div>
+							<div class="col-1"><input id="wan-8" class="num sr-only" type="checkbox" name="wan" value="8" /><label class="btn-circle" for="wan-8">8</label></div>
+							<div class="col-1"><input id="wan-9" class="num sr-only" type="checkbox" name="wan" value="9" /><label class="btn-circle" for="wan-9">9</label></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row">
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'all')">全</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'odd')">奇</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'even')">偶</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'big')">大</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'small')">小</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('wan', 'clear')">清</label></div>
+						</div>
+					</div>
+				</div>
+				<!-- 千位 -->
+				<div class="row">
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-1"><input id="chien-0" class="num sr-only" type="checkbox" name="chien" value="0" /><label class="btn-circle" for="chien-0">0</label></div>
+							<div class="col-1"><input id="chien-1" class="num sr-only" type="checkbox" name="chien" value="1" /><label class="btn-circle" for="chien-1">1</label></div>
+							<div class="col-1"><input id="chien-2" class="num sr-only" type="checkbox" name="chien" value="2" /><label class="btn-circle" for="chien-2">2</label></div>
+							<div class="col-1"><input id="chien-3" class="num sr-only" type="checkbox" name="chien" value="3" /><label class="btn-circle" for="chien-3">3</label></div>
+							<div class="col-1"><input id="chien-4" class="num sr-only" type="checkbox" name="chien" value="4" /><label class="btn-circle" for="chien-4">4</label></div>
+							<div class="col-1"><input id="chien-5" class="num sr-only" type="checkbox" name="chien" value="5" /><label class="btn-circle" for="chien-5">5</label></div>
+							<div class="col-1"><input id="chien-6" class="num sr-only" type="checkbox" name="chien" value="6" /><label class="btn-circle" for="chien-6">6</label></div>
+							<div class="col-1"><input id="chien-7" class="num sr-only" type="checkbox" name="chien" value="7" /><label class="btn-circle" for="chien-7">7</label></div>
+							<div class="col-1"><input id="chien-8" class="num sr-only" type="checkbox" name="chien" value="8" /><label class="btn-circle" for="chien-8">8</label></div>
+							<div class="col-1"><input id="chien-9" class="num sr-only" type="checkbox" name="chien" value="9" /><label class="btn-circle" for="chien-9">9</label></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row">
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'all')">全</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'odd')">奇</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'even')">偶</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'big')">大</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'small')">小</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('chien', 'clear')">清</label></div>
+						</div>
+					</div>
+				</div>
+				<!-- 百位 -->
+				<div class="row">
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-1"><input id="pai-0" class="num sr-only" type="checkbox" name="pai" value="0" /><label class="btn-circle" for="pai-0">0</label></div>
+							<div class="col-1"><input id="pai-1" class="num sr-only" type="checkbox" name="pai" value="1" /><label class="btn-circle" for="pai-1">1</label></div>
+							<div class="col-1"><input id="pai-2" class="num sr-only" type="checkbox" name="pai" value="2" /><label class="btn-circle" for="pai-2">2</label></div>
+							<div class="col-1"><input id="pai-3" class="num sr-only" type="checkbox" name="pai" value="3" /><label class="btn-circle" for="pai-3">3</label></div>
+							<div class="col-1"><input id="pai-4" class="num sr-only" type="checkbox" name="pai" value="4" /><label class="btn-circle" for="pai-4">4</label></div>
+							<div class="col-1"><input id="pai-5" class="num sr-only" type="checkbox" name="pai" value="5" /><label class="btn-circle" for="pai-5">5</label></div>
+							<div class="col-1"><input id="pai-6" class="num sr-only" type="checkbox" name="pai" value="6" /><label class="btn-circle" for="pai-6">6</label></div>
+							<div class="col-1"><input id="pai-7" class="num sr-only" type="checkbox" name="pai" value="7" /><label class="btn-circle" for="pai-7">7</label></div>
+							<div class="col-1"><input id="pai-8" class="num sr-only" type="checkbox" name="pai" value="8" /><label class="btn-circle" for="pai-8">8</label></div>
+							<div class="col-1"><input id="pai-9" class="num sr-only" type="checkbox" name="pai" value="9" /><label class="btn-circle" for="pai-9">9</label></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row">
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'all')">全</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'odd')">奇</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'even')">偶</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'big')">大</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'small')">小</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('pai', 'clear')">清</label></div>
+						</div>
+					</div>
+				</div>
+				<!-- 十位 -->
+				<div class="row">
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-1"><input id="shih-0" class="num sr-only" type="checkbox" name="shih" value="0" /><label class="btn-circle" for="shih-0">0</label></div>
+							<div class="col-1"><input id="shih-1" class="num sr-only" type="checkbox" name="shih" value="1" /><label class="btn-circle" for="shih-1">1</label></div>
+							<div class="col-1"><input id="shih-2" class="num sr-only" type="checkbox" name="shih" value="2" /><label class="btn-circle" for="shih-2">2</label></div>
+							<div class="col-1"><input id="shih-3" class="num sr-only" type="checkbox" name="shih" value="3" /><label class="btn-circle" for="shih-3">3</label></div>
+							<div class="col-1"><input id="shih-4" class="num sr-only" type="checkbox" name="shih" value="4" /><label class="btn-circle" for="shih-4">4</label></div>
+							<div class="col-1"><input id="shih-5" class="num sr-only" type="checkbox" name="shih" value="5" /><label class="btn-circle" for="shih-5">5</label></div>
+							<div class="col-1"><input id="shih-6" class="num sr-only" type="checkbox" name="shih" value="6" /><label class="btn-circle" for="shih-6">6</label></div>
+							<div class="col-1"><input id="shih-7" class="num sr-only" type="checkbox" name="shih" value="7" /><label class="btn-circle" for="shih-7">7</label></div>
+							<div class="col-1"><input id="shih-8" class="num sr-only" type="checkbox" name="shih" value="8" /><label class="btn-circle" for="shih-8">8</label></div>
+							<div class="col-1"><input id="shih-9" class="num sr-only" type="checkbox" name="shih" value="9" /><label class="btn-circle" for="shih-9">9</label></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row">
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'all')">全</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'odd')">奇</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'even')">偶</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'big')">大</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'small')">小</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('shih', 'clear')">清</label></div>
+						</div>
+					</div>
+				</div>
+				<!-- 個位 -->
+				<div class="row">
+					<div class="col-sm-7">
+						<div class="row">
+							<div class="col-1"><input id="ko-0" class="num sr-only" type="checkbox" name="ko" value="0" /><label class="btn-circle" for="ko-0">0</label></div>
+							<div class="col-1"><input id="ko-1" class="num sr-only" type="checkbox" name="ko" value="1" /><label class="btn-circle" for="ko-1">1</label></div>
+							<div class="col-1"><input id="ko-2" class="num sr-only" type="checkbox" name="ko" value="2" /><label class="btn-circle" for="ko-2">2</label></div>
+							<div class="col-1"><input id="ko-3" class="num sr-only" type="checkbox" name="ko" value="3" /><label class="btn-circle" for="ko-3">3</label></div>
+							<div class="col-1"><input id="ko-4" class="num sr-only" type="checkbox" name="ko" value="4" /><label class="btn-circle" for="ko-4">4</label></div>
+							<div class="col-1"><input id="ko-5" class="num sr-only" type="checkbox" name="ko" value="5" /><label class="btn-circle" for="ko-5">5</label></div>
+							<div class="col-1"><input id="ko-6" class="num sr-only" type="checkbox" name="ko" value="6" /><label class="btn-circle" for="ko-6">6</label></div>
+							<div class="col-1"><input id="ko-7" class="num sr-only" type="checkbox" name="ko" value="7" /><label class="btn-circle" for="ko-7">7</label></div>
+							<div class="col-1"><input id="ko-8" class="num sr-only" type="checkbox" name="ko" value="8" /><label class="btn-circle" for="ko-8">8</label></div>
+							<div class="col-1"><input id="ko-9" class="num sr-only" type="checkbox" name="ko" value="9" /><label class="btn-circle" for="ko-9">9</label></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="row">
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'all')">全</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'odd')">奇</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'even')">偶</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'big')">大</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'small')">小</label></div>
+							<div class="col-1"><label class="btn-circle" ng-click="body.selectNum('ko', 'clear')">清</label></div>
+						</div>
+					</div>
+				</div>
+			</div><!-- Number picker - End -->
+
+			<!-- 總合大小單雙 -->
+			<div ng-show="body.lottery.playing_method.val == '總合大小單雙'" ng-cloak>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="sum-big" name="big_or_small" value="big" />
+					<label class="form-check-label" for="sum-big">總合大</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="sum-small" name="big_or_small" value="small" />
+					<label class="form-check-label" for="sum-small">總合小</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="sum-odd" name="odd_or_even" value="odd" />
+					<label class="form-check-label" for="sum-odd">總合單</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" id="sum-even" name="odd_or_even" value="even" />
+					<label class="form-check-label" for="sum-even">總合雙</label>
+				</div>
+			</div>
+
+
+			<div class="row justify-content-md-center">
+				<div class="col-sm-6">
+					<button type="button" class="btn btn-primary btn-lg btn-block"
+						ng-click="body.clickSendBtn()"
+						ng-disabled="!body.isValid()">送出</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+	<script>
+	$(function () {
+		var app = angular.module("app", []);
+
+		app.controller("BodyCtrl", BodyCtrl);
+		BodyCtrl.$inject = ["$scope"];
+		function BodyCtrl($scope) {
+			var vm = this;
+
+			vm.lottery = {
+				publisher: "",
+				publisher_options: [],
+				playing_method: "",
+				playing_method_options: [],
+				changePublisher: function () {
+					switch (this.publisher.val) {
+						case 1:
+							this.playing_method_options = [
+								{label:"直選複式", val:"直選複式"},
+								{label:"總合大小單雙", val:"總合大小單雙"}
+							];
+							break;
+						case 2:
+							this.playing_method_options = [
+								{label:"直選複式", val:"直選複式"},
+								{label:"直選單式", val:"直選單式"}
+							];
+							break;
+						default:
+							this.playing_method_options = [];
+							break;
+					}
+					this.playing_method_options.length && (this.playing_method = this.playing_method_options[0]);
+				},
+				init: function () {
+					this.publisher_options = [
+						{label:"重慶時時彩", val:1},
+						{label:"北京 11 選 5", val:2}
+					];
+
+					this.publisher = this.publisher_options[0];
+					this.changePublisher();
+				}
+			};
+
+			vm.selectNum = selectNum;
+			vm.isValid = isValid;
+			vm.clickSendBtn = clickSendBtn;
+
+
+			vm.lottery.init();
+			$("body").on("click", function () {
+				$scope.$digest();
+			});
+
+			function selectNum(digit, type) {
+				$("input[name='" + digit + "']").each(function () {
+					switch (type) {
+						case "all":
+							this.checked = true;
+							break;
+						case "odd":
+							this.checked = (this.value % 2 != 0);
+							break;
+						case "even":
+							this.checked = (this.value != "0" && this.value % 2 == 0);
+							break;
+						case "big":
+							this.checked = (this.value >= 5);
+							break;
+						case "small":
+							this.checked = (this.value < 5);
+							break;
+						case "clear":
+							this.checked = false;
+							break;
+					}
+				});
+			}
+
+			function isValid() {
+				switch (vm.lottery.playing_method.val) {
+					case "直選單式":
+						var numbers = getSelectedNumbers();
+						return (
+							numbers[0].length == 1 &&
+							numbers[1].length == 1 &&
+							numbers[2].length == 1 &&
+							numbers[3].length == 1 &&
+							numbers[4].length == 1
+						);
+					case "直選複式":
+						var numbers = getSelectedNumbers();
+						return (
+							numbers[0].length >= 1 &&
+							numbers[1].length >= 1 &&
+							numbers[2].length >= 1 &&
+							numbers[3].length >= 1 &&
+							numbers[4].length >= 1
+						);
+					case "總合大小單雙":
+						return (
+							f.big_or_small.value ||
+							f.odd_or_even.value
+						);
+				}
+				return false;
+			}
+
+			function clickSendBtn() {
+				// [POST] http://three.fake/v1/lottery/bet
+				alert("資料已送至投注 API, 詳細請看 console log.");
+				console.log({
+					publisher_id: vm.lottery.publisher.label,
+					playing_method_id: vm.lottery.playing_method.label,
+					numbers: getSelectedNumbers()
+				});
+				f.reset();
+			}
+
+			function getSelectedNumbers() {
+				var numbers = [
+					[],
+					[],
+					[],
+					[],
+					[]
+				];
+
+				$("input.num:checked").each(function () {
+					var idx;
+					switch (this.name) {
+						case "wan":
+							idx = 0;
+							break;
+						case "chien":
+							idx = 1;
+							break;
+						case "pai":
+							idx = 2;
+							break;
+						case "shih":
+							idx = 3;
+							break;
+						case "ko":
+							idx = 4;
+							break;
+						default:
+							return;
+					}
+					numbers[idx].push(this.value);
+				});
+
+				return numbers;
+			}
+		}
+
+		angular.bootstrap(document, ["app"], {
+			strictDi: true
+		});
+	});
+	</script>
+
+</body>
+</html>
